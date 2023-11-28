@@ -60,10 +60,27 @@ const postWrapper = document.getElementById("container");
 
 createPost(posts, postWrapper);
 
+// LikeButtons Event Listener
+const likeButtons = document.querySelectorAll(".js-like-button");
+
+likeButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+        const likecounterEl = document.querySelector(`#like-counter-${index}`);
+        if (button.classList.contains("bg-blue")) {
+            likecounterEl.innerHTML = parseInt(likecounterEl.innerHTML) - 1;
+        } else {
+            likecounterEl.innerHTML = parseInt(likecounterEl.innerHTML) + 1;
+        }
+        button.classList.toggle("bg-blue");
+    });
+})
+
 // ==================== Functions ====================
 
 function createPost(postInfo, wrapper) {
     postInfo.forEach((post, index) => {
+        newDate = new Date(post.created);
+        
         wrapper.innerHTML += `
         <div class="post">
             <div class="post__header">
@@ -73,7 +90,7 @@ function createPost(postInfo, wrapper) {
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${post.author.name}</div>
-                        <div class="post-meta__time">${post.created}</div>
+                        <div class="post-meta__time">${newDate.toLocaleDateString()}</div>
                     </div>                    
                 </div>
             </div>
